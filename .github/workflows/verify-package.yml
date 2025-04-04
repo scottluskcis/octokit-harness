@@ -1,0 +1,26 @@
+name: Verify Package
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm run bundle
+      - run: npm pack
+      - name: Check package content
+        run: |
+          tar -tvf *.tgz
+          echo "Checking if dist directory contains the expected files:"
+          tar -xvf *.tgz package/dist
+          ls -la package/dist

@@ -1,6 +1,6 @@
 {
   "name": "@scottluskcis/octokit-harness",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A flexible wrapper for working with GitHub API using Octokit",
   "type": "module",
   "main": "dist/index.js",
@@ -31,9 +31,12 @@
   ],
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    }
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
   },
   "author": "Scott Lusk",
   "license": "MIT",
