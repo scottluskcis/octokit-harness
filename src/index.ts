@@ -9,3 +9,6 @@ export { executeWithOctokit } from './run.js';
 
 // Retry mechanism
 export { withRetry, type RetryConfig, type RetryState } from './retry.js';
+
+// Configuration
+export { getOptsFromEnv } from './config.js';
