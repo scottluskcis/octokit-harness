@@ -1,10 +1,10 @@
-import * as winston from "winston";
-import * as path from "path";
-import { mkdir } from "fs/promises";
-import { existsSync } from "fs";
+import * as winston from 'winston';
+import * as path from 'path';
+import { mkdir } from 'fs/promises';
+import { existsSync } from 'fs';
 const { combine, timestamp, printf, colorize } = winston.format;
 
-import { Logger } from "./types.js";
+import { Logger } from './types.js';
 
 const format = printf(({ level, message, timestamp, owner, repo }): string => {
   if (owner && repo) {
@@ -16,10 +16,10 @@ const format = printf(({ level, message, timestamp, owner, repo }): string => {
 
 const generateLoggerOptions = async (
   verbose: boolean,
-  logFileName?: string
+  logFileName?: string,
 ): Promise<winston.LoggerOptions> => {
   // Use absolute path for logs directory
-  const logsDir = path.resolve(process.cwd(), "logs");
+  const logsDir = path.resolve(process.cwd(), 'logs');
 
   try {
     // Create logs directory if it doesn't exist
@@ -28,7 +28,7 @@ const generateLoggerOptions = async (
     }
 
     const defaultLogName = `repo-stats-${
-      new Date().toISOString().split("T")[0]
+      new Date().toISOString().split('T')[0]
     }.log`;
 
     const logFile = path.resolve(logsDir, logFileName ?? defaultLogName);
@@ -38,7 +38,7 @@ const generateLoggerOptions = async (
     const commonFormat = combine(timestamp(), format);
 
     return {
-      level: verbose ? "debug" : "info",
+      level: verbose ? 'debug' : 'info',
       format: commonFormat,
       transports: [
         new winston.transports.Console({
@@ -47,7 +47,7 @@ const generateLoggerOptions = async (
         new winston.transports.File({
           filename: logFile,
           format: commonFormat,
-          options: { flags: "a" }, // Append mode
+          options: { flags: 'a' }, // Append mode
         }),
       ],
       exitOnError: false,
@@ -60,14 +60,14 @@ const generateLoggerOptions = async (
 
 export const createLogger = async (
   verbose: boolean,
-  logFileName?: string
+  logFileName?: string,
 ): Promise<Logger> => {
   const options = await generateLoggerOptions(verbose, logFileName);
   const logger = winston.createLogger(options);
 
   // Add error handler
-  logger.on("error", (error) => {
-    console.error("Logger error:", error);
+  logger.on('error', (error) => {
+    console.error('Logger error:', error);
   });
 
   return logger;
@@ -75,18 +75,18 @@ export const createLogger = async (
 
 export const logInitialization = {
   start: (logger: Logger): void => {
-    logger.info("Initializing repo-stats-queue application...");
+    logger.info('Initializing repo-stats-queue application...');
   },
   auth: (logger: Logger): void => {
-    logger.debug("Creating auth config...");
+    logger.debug('Creating auth config...');
   },
   octokit: (logger: Logger): void => {
-    logger.debug("Initializing octokit client...");
+    logger.debug('Initializing octokit client...');
   },
   token: (logger: Logger): void => {
-    logger.debug("Generating app token...");
+    logger.debug('Generating app token...');
   },
   directories: (logger: Logger): void => {
-    logger.debug("Setting up output directories...");
+    logger.debug('Setting up output directories...');
   },
 };

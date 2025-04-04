@@ -1,38 +1,43 @@
 {
-  "name": "octokit-harness",
-  "version": "1.0.0",
-  "description": "A flexible toolkit for working with GitHub API using Octokit",
+  "name": "@scottluskcis/octokit-harness",
+  "version": "0.0.1",
+  "description": "A flexible wrapper for working with GitHub API using Octokit",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "bin": {
-    "octokit-harness": "dist/index.js"
-  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
-    "watch": "tsc -w",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublishOnly": "npm run build"
+    "bundle": "npm run format:write && npm run build && npm run package",
+    "start": "node dist/index.js",
+    "dev": "npx tsx src/index.ts",
+    "format:write": "npx prettier --write .",
+    "format:check": "npx prettier --check .",
+    "lint": "npx eslint .",
+    "package": "npx rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
+    "package:watch": "npm run package -- --watch",
+    "test": "exit 0",
+    "lint:fix": "eslint \"**/*.ts\" --fix"
   },
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scottluskcis/octokit-harness.git"
   },
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
   "keywords": [
     "github",
-    "octokit",
-    "api",
-    "cli"
+    "octokit"
   ],
   "author": "Scott Lusk",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/scottluskcis/octokit-harness/issues"
+  },
+  "homepage": "https://github.com/scottluskcis/octokit-harness#readme",
+  "publishConfig": {
+    "@scottluskcis:registry": "https://npm.pkg.github.com"
+  },
   "dependencies": {
     "@octokit/auth-app": "^7.2.0",
     "@octokit/graphql": "^8.2.1",
@@ -43,15 +48,19 @@
     "winston": "^3.17.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.24.0",
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-typescript": "^12.1.2",
     "@types/node": "^22.13.10",
-    "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^5.62.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "eslint-config-prettier": "^10.1.1",
     "prettier": "^2.8.8",
+    "rollup": "^4.35.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2"
-  },
-  "engines": {
-    "node": ">=16"
   }
 }

@@ -1,39 +1,38 @@
-// See: https://rollupjs.org/introduction/
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import typescript from '@rollup/plugin-typescript';
+import json from '@rollup/plugin-json';
+import { defineConfig } from 'rollup';
 
-import commonjs from "@rollup/plugin-commonjs";
-import nodeResolve from "@rollup/plugin-node-resolve";
-import typescript from "@rollup/plugin-typescript";
-import json from "@rollup/plugin-json";
-
-const config = {
-  input: "src/index.ts",
+export default defineConfig({
+  input: 'src/index.ts',
   output: {
-    esModule: true,
-    file: "dist/index.js",
-    format: "es",
+    dir: 'dist',
+    format: 'es',
     sourcemap: true,
+    preserveModules: true, // This helps maintain the module structure
   },
-  plugins: [
-    json(), // Add this plugin first
-    typescript(),
-    nodeResolve({ preferBuiltins: true }),
-    commonjs(),
-  ],
-  // Mark node_modules as external to avoid bundling them
   external: [
-    /node_modules/,
-    "dotenv",
-    "winston",
-    "octokit",
-    "@octokit/graphql",
-    "@octokit/plugin-paginate-graphql",
-    "@octokit/plugin-throttling",
-    "execa",
-    "shell-quote",
-    "@fast-csv/parse",
-    "csv-stringify",
-    "undici",
+    // External dependencies that shouldn't be bundled
+    /^@octokit\//,
+    'octokit',
+    'winston',
+    'undici',
+    // Add any other dependencies that should be treated as external
   ],
-};
-
-export default config;
+  plugins: [
+    resolve({
+      preferBuiltins: true,
+      exportConditions: ['node'],
+    }),
+    commonjs(),
+    json(),
+    typescript({
+      tsconfig: './tsconfig.json',
+      // The following options ensure declaration files are generated
+      declaration: true,
+      declarationDir: './dist',
+      rootDir: './src',
+    }),
+  ],
+});

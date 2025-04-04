@@ -9,7 +9,10 @@
     "outDir": "./dist",
     "allowJs": true,
     "esModuleInterop": true,
-    "strict": true
+    "strict": true,
+    "declaration": true,
+    "declarationDir": "./dist",
+    "skipLibCheck": true
   },
   "exclude": [
     "__fixtures__",
@@ -19,5 +22,5 @@
     "node_modules",
     "archived"
   ],
-  "include": ["src", "example/command-template.ts"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "index.d.ts"]
 }
