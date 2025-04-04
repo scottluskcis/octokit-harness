@@ -1,6 +1,6 @@
 {
   "name": "@scottluskcis/octokit-harness",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A flexible wrapper for working with GitHub API using Octokit",
   "type": "module",
   "main": "dist/index.js",
@@ -29,6 +29,12 @@
     "github",
     "octokit"
   ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
   "author": "Scott Lusk",
   "license": "MIT",
   "bugs": {
@@ -43,6 +49,7 @@
     "@octokit/graphql": "^8.2.1",
     "@octokit/plugin-paginate-graphql": "^5.2.4",
     "@octokit/plugin-throttling": "^9.4.0",
+    "dotenv": "^16.4.7",
     "octokit": "^4.1.2",
     "undici": "^7.4.0",
     "winston": "^3.17.0"
