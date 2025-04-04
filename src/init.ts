@@ -1,20 +1,20 @@
-import { createAuthConfig } from "./auth.js";
-import { createLogger } from "./logger.js";
-import { createOctokit } from "./octokit.js";
-import { Arguments, Logger } from "./types.js";
-import { Octokit } from "octokit";
+import { createAuthConfig } from './auth.js';
+import { createLogger } from './logger.js';
+import { createOctokit } from './octokit.js';
+import { Arguments, Logger } from './types.js';
+import { Octokit } from 'octokit';
 
 /**
  * Initialize the Octokit client and logger
  */
 export const init_client = async (
-  opts: Arguments
+  opts: Arguments,
 ): Promise<{
   logger: Logger;
   octokit: Octokit;
 }> => {
   const logFileName = `${opts.orgName}-repo-stats-${
-    new Date().toISOString().split("T")[0]
+    new Date().toISOString().split('T')[0]
   }.log`;
 
   const logger = await createLogger(opts.verbose, logFileName);
@@ -24,7 +24,7 @@ export const init_client = async (
     authConfig,
     opts.baseUrl,
     opts.proxyUrl,
-    logger
+    logger,
   );
 
   return { logger, octokit };
@@ -35,10 +35,10 @@ export const init_client = async (
  */
 export const init_logger = async (
   verbose: boolean,
-  logFilePrefix?: string
+  logFilePrefix?: string,
 ): Promise<Logger> => {
   const logFileName = logFilePrefix
-    ? `${logFilePrefix}-${new Date().toISOString().split("T")[0]}.log`
+    ? `${logFilePrefix}-${new Date().toISOString().split('T')[0]}.log`
     : undefined;
 
   return await createLogger(verbose, logFileName);
@@ -48,7 +48,7 @@ export const init_logger = async (
  * Initialize a custom Octokit client
  */
 export const init_octokit = async (
-  opts: Arguments
+  opts: Arguments,
 ): Promise<{
   logger: Logger;
   octokit: Octokit;
@@ -60,7 +60,7 @@ export const init_octokit = async (
     authConfig,
     opts.baseUrl,
     opts.proxyUrl,
-    logger
+    logger,
   );
 
   return { logger, octokit };

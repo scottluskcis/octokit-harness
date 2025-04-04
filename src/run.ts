@@ -1,7 +1,7 @@
-import { init_octokit } from "./init.js";
-import { withRetry } from "./retry.js";
-import { Arguments, Logger, RetryState } from "./types.js";
-import { Octokit } from "octokit";
+import { init_octokit } from './init.js';
+import { withRetry, RetryState } from './retry.js';
+import { Arguments, Logger } from './types.js';
+import { Octokit } from 'octokit';
 
 /**
  * Executes GitHub operations with Octokit client in a resilient manner
@@ -14,7 +14,7 @@ import { Octokit } from "octokit";
  */
 export async function executeWithOctokit<T>(
   opts: Arguments,
-  callback: (clients: { logger: Logger; octokit: Octokit }) => Promise<T>
+  callback: (clients: { logger: Logger; octokit: Octokit }) => Promise<T>,
 ): Promise<T> {
   // Configure retry options from the provided arguments
   const retryConfig = {
