@@ -1,0 +1,57 @@
+{
+  "name": "octokit-harness",
+  "version": "1.0.0",
+  "description": "A flexible toolkit for working with GitHub API using Octokit",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "octokit-harness": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "npm run build"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "github",
+    "octokit",
+    "api",
+    "cli"
+  ],
+  "author": "Scott Lusk",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit/auth-app": "^7.2.0",
+    "@octokit/graphql": "^8.2.1",
+    "@octokit/plugin-paginate-graphql": "^5.2.4",
+    "@octokit/plugin-throttling": "^9.4.0",
+    "octokit": "^4.1.2",
+    "undici": "^7.4.0",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "prettier": "^2.8.8",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}
