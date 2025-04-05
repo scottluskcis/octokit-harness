@@ -4,5 +4,5 @@
 /**
  * Package version from package.json
  */
-const VERSION = '0.0.5';
+const VERSION = '0.0.6';
 export default VERSION;
