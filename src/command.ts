@@ -1,8 +1,6 @@
-import * as commander from 'commander';
+import { Command, Option } from 'commander';
 import { parseFloatOption, parseIntOption } from './utils.js';
 import VERSION from './version.js';
-
-const { Option } = commander;
 
 /**
  * Option configuration for command options
@@ -29,7 +27,7 @@ export interface CommonOptionsConfig {
  * Interface for option definition structure
  */
 interface OptionDefinition {
-  option: commander.Option;
+  option: Option;
   config: CommandOptionConfig;
 }
 
@@ -51,8 +49,8 @@ export function createBaseCommand(
   name: string,
   description: string,
   optionsConfig?: CommonOptionsConfig,
-): commander.Command {
-  const command = new commander.Command();
+): Command {
+  const command = new Command();
 
   command.name(name).description(description).version(VERSION);
 
@@ -275,9 +273,9 @@ export function createBaseCommand(
 export function createProgram(
   programName: string = 'octokit-harness',
   description: string = 'A flexible wrapper for working with GitHub API using Octokit',
-  commands: commander.Command[] = [],
-): commander.Command {
-  const program = new commander.Command();
+  commands: Command[] = [],
+): Command {
+  const program = new Command();
 
   program.name(programName).description(description).version(VERSION);
 
