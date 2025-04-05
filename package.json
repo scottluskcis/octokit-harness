@@ -1,6 +1,6 @@
 {
   "name": "@scottluskcis/octokit-harness",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A flexible wrapper for working with GitHub API using Octokit",
   "type": "module",
   "main": "dist/index.js",
@@ -10,9 +10,11 @@
   ],
   "scripts": {
     "build": "tsc",
-    "bundle": "npm run format:write && npm run build && npm run package",
+    "bundle": "npm run format:write && npm run prebuild && npm run build && npm run package",
     "start": "node dist/index.js",
     "dev": "npx tsx src/index.ts",
+    "update-version": "node scripts/update-version.js",
+    "prebuild": "npm run update-version",
     "format:write": "npx prettier --write .",
     "format:check": "npx prettier --check .",
     "lint": "npx eslint .",
@@ -52,6 +54,7 @@
     "@octokit/graphql": "^8.2.1",
     "@octokit/plugin-paginate-graphql": "^5.2.4",
     "@octokit/plugin-throttling": "^9.4.0",
+    "commander": "^13.1.0",
     "dotenv": "^16.4.7",
     "octokit": "^4.1.2",
     "undici": "^7.4.0",
