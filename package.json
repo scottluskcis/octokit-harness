@@ -1,6 +1,6 @@
 {
   "name": "@scottluskcis/octokit-harness",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A flexible wrapper for working with GitHub API using Octokit",
   "type": "module",
   "main": "dist/index.js",

@@ -1,6 +1,8 @@
 import { Command, Option } from 'commander';
 import { parseFloatOption, parseIntOption } from './utils.js';
-import VERSION from './version.js';
+import { OctokitExecutionContext } from './octokit.js';
+import { executeWithOctokit } from './run.js';
+import { Arguments } from './types.js';
 
 /**
  * Option configuration for command options
@@ -45,14 +47,23 @@ interface AllOptionsMap {
  * @param optionsConfig Configuration for which options to include and their settings
  * @returns A Command instance with common options
  */
-export function createBaseCommand(
-  name: string,
-  description: string,
-  optionsConfig?: CommonOptionsConfig,
-): Command {
+export function createBaseCommand({
+  name,
+  description,
+  optionsConfig,
+  version,
+}: {
+  name: string;
+  description?: string;
+  optionsConfig?: CommonOptionsConfig;
+  version?: string;
+}): Command {
   const command = new Command();
 
-  command.name(name).description(description).version(VERSION);
+  command
+    .name(name)
+    .description(description || `Command to ${name}`)
+    .version(version || '1.0.0');
 
   // Define all possible common options
   const allOptions: AllOptionsMap = {
@@ -264,23 +275,78 @@ export function createBaseCommand(
 }
 
 /**
+ * Type definition for an Octokit command action callback
+ */
+export type OctokitCommandAction<T = any> = (
+  context: OctokitExecutionContext,
+) => Promise<T>;
+
+/**
+ * Creates a base command with Octokit integration that handles the setup automatically
+ * @param name The name of the command
+ * @param description The description of the command
+ * @param action The action callback that receives the Octokit execution context
+ * @param optionsConfig Configuration for which options to include and their settings
+ * @returns A Command instance with common options and Octokit integration
+ */
+export function createBaseOctokitCommand({
+  name,
+  description,
+  action,
+  optionsConfig,
+  version,
+}: {
+  name: string;
+  description?: string;
+  action: OctokitCommandAction;
+  optionsConfig?: CommonOptionsConfig;
+  version?: string;
+}): Command {
+  // Create base command with all the common options
+  const command = createBaseCommand({
+    name,
+    description,
+    optionsConfig,
+    version,
+  });
+
+  // Set the action to automatically handle Octokit setup
+  command.action(async (options: Arguments) => {
+    await executeWithOctokit(options, action);
+  });
+
+  return command;
+}
+
+/**
  * Creates a CLI program with a default command and any subcommands
  * @param programName Name of the program
  * @param description Description of the program
  * @param commands Array of commands to add to the program
  * @returns A configured commander program
  */
-export function createProgram(
-  programName: string = 'octokit-harness',
-  description: string = 'A flexible wrapper for working with GitHub API using Octokit',
-  commands: Command[] = [],
-): Command {
+export function createProgram({
+  name,
+  description,
+  commands,
+  version,
+}: {
+  name: string;
+  description?: string;
+  commands: Command[];
+  version?: string;
+}): Command {
   const program = new Command();
 
-  program.name(programName).description(description).version(VERSION);
+  program
+    .name(name)
+    .description(description || `${name} program`)
+    .version(version || '1.0.0');
 
   // Add all provided commands
-  commands.forEach((cmd) => program.addCommand(cmd));
+  if (commands && commands.length > 0) {
+    commands.forEach((cmd) => program.addCommand(cmd));
+  }
 
   return program;
 }

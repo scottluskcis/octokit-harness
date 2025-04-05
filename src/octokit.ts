@@ -7,8 +7,16 @@ import {
 import { Octokit, RequestError } from 'octokit';
 import { paginateGraphQL } from '@octokit/plugin-paginate-graphql';
 import { throttling } from '@octokit/plugin-throttling';
-import { Logger, LoggerFn } from './types.js';
+import { Arguments, Logger, LoggerFn } from './types.js';
 import { AuthConfig } from './auth.js';
+
+export type OctokitClientOptions = Arguments;
+
+export interface OctokitExecutionContext {
+  logger: Logger;
+  octokit: Octokit;
+  opts: OctokitClientOptions;
+}
 
 const OctokitWithPlugins = Octokit.plugin(paginateGraphQL).plugin(throttling);
 
