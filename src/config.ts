@@ -43,5 +43,12 @@ export function getOptsFromEnv(): Arguments {
 
     // Resume option
     resumeFromLastSave: process.env.RESUME_FROM_LAST_SAVE === 'true',
+
+    // Output options
+    outputFile: process.env.OUTPUT_FILE,
+
+    // Repository settings
+    repoList: process.env.REPO_LIST,
+    autoProcessMissing: process.env.AUTO_PROCESS_MISSING === 'true',
   };
 }

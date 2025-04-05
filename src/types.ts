@@ -40,6 +40,7 @@ export interface Arguments {
   resumeFromLastSave?: boolean;
 
   // output
+  outputFile?: string;
   outputFileName?: string;
 
   repoList?: string;
