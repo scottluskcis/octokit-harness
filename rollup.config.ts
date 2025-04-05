@@ -12,6 +12,7 @@ const external = [
   'winston',
   'undici',
   'dotenv',
+  'commander',
   // Add any other dependencies that should be treated as external
 ];
 
