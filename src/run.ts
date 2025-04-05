@@ -14,7 +14,11 @@ import { Octokit } from 'octokit';
  */
 export async function executeWithOctokit<T>(
   opts: Arguments,
-  callback: (clients: { logger: Logger; octokit: Octokit }) => Promise<T>,
+  callback: (clients: {
+    logger: Logger;
+    octokit: Octokit;
+    opts: Arguments;
+  }) => Promise<T>,
 ): Promise<T> {
   // Configure retry options from the provided arguments
   const retryConfig = {
