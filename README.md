@@ -39,6 +39,7 @@ npm install @scottluskcis/octokit-harness --registry=https://npm.pkg.github.com/
 - **Configurable logging** - Detailed logging system based on Winston
 - **Rate limit handling** - Intelligent throttling and rate limit management
 - **Environment-based configuration** - Easy setup via environment variables or direct options
+- **CLI command builder** - Utilities for building consistent CLI applications
 
 ## Usage
 
@@ -66,6 +67,73 @@ await executeWithOctokit(config, async ({ octokit, logger }) => {
   return repo;
 });
 ```
+
+### CLI Command Building
+
+The package provides utilities to create consistent CLI commands with standardized options:
+
+```typescript
+import {
+  createBaseCommand,
+  createProgram,
+  executeWithOctokit,
+} from '@scottluskcis/octokit-harness';
+
+// Create a command for a specific operation
+const repoStatsCommand = createBaseCommand(
+  'repo-stats',
+  'Gathers statistics for all repositories in an organization',
+);
+
+// Define the command's action
+repoStatsCommand.action(async (options) => {
+  console.log('Starting repo stats collection...');
+
+  await executeWithOctokit(options, async ({ octokit, logger }) => {
+    logger.info(`Processing repositories for ${options.orgName}`);
+    // Your implementation here
+  });
+
+  console.log('Repo stats completed');
+});
+
+// Create another command with specific option requirements
+const missingReposCommand = createBaseCommand(
+  'missing-repos',
+  'Identify repositories missing from a previous scan',
+  {
+    // Make this option mandatory
+    outputFileName: { mandatory: true },
+    // Include other options with default settings
+    orgName: true,
+    accessToken: true,
+    // Don't include options we don't need
+    extraPageSize: false,
+  },
+);
+
+missingReposCommand.action(async (options) => {
+  console.log(`Checking for missing repos using ${options.outputFileName}`);
+  // Command implementation
+});
+
+// Create a program with multiple commands
+const program = createProgram(
+  'github-tools',
+  'GitHub repository management tools',
+  [repoStatsCommand, missingReposCommand],
+);
+
+// Parse command line arguments
+program.parse(process.argv);
+```
+
+This example creates a CLI application with two commands:
+
+1. `github-tools repo-stats` - For gathering repository statistics
+2. `github-tools missing-repos` - For identifying missing repositories
+
+Each command automatically includes the appropriate set of options with standardized names, environment variable support, and help documentation.
 
 ### Authentication Configuration
 
@@ -145,6 +213,10 @@ const result = await withRetry(
 | `retryMaxDelay`         | `RETRY_MAX_DELAY`         | Maximum retry delay in ms (default: 30000)                     |
 | `retryBackoffFactor`    | `RETRY_BACKOFF_FACTOR`    | Exponential backoff factor (default: 2)                        |
 | `retrySuccessThreshold` | `RETRY_SUCCESS_THRESHOLD` | Successful operations needed to reset retry count (default: 5) |
+| `outputFile`            | `OUTPUT_FILE`             | Path to output file                                            |
+| `outputFileName`        | `OUTPUT_FILE_NAME`        | Name of the output file                                        |
+| `repoList`              | `REPO_LIST`               | Path to repository list file                                   |
+| `autoProcessMissing`    | `AUTO_PROCESS_MISSING`    | Automatically process missing repositories                     |
 
 ## API Reference
 
@@ -156,6 +228,8 @@ const result = await withRetry(
 - **`init_logger(verbose, logFilePrefix?)`**: Initializes just the logger
 - **`init_octokit(options)`**: Initializes just the Octokit client
 - **`withRetry(operation, config, onRetry?)`**: Implements retry mechanism with exponential backoff
+- **`createBaseCommand(name, description, optionsConfig?)`**: Creates a CLI command with standard GitHub options
+- **`createProgram(programName, description, commands)`**: Creates a CLI program with multiple commands
 
 ### Types
 
@@ -163,6 +237,8 @@ const result = await withRetry(
 - **`Logger`**: Winston-based logger interface
 - **`RetryConfig`**: Configuration for retry mechanism
 - **`RetryState`**: Current state of retry operation
+- **`CommandOptionConfig`**: Configuration for command options
+- **`CommonOptionsConfig`**: Configuration map for command options
 
 ## License
 

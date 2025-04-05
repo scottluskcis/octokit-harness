@@ -12,6 +12,7 @@ export const init_client = async (
 ): Promise<{
   logger: Logger;
   octokit: Octokit;
+  opts: Arguments;
 }> => {
   const logFileName = `${opts.orgName}-repo-stats-${
     new Date().toISOString().split('T')[0]
@@ -27,7 +28,7 @@ export const init_client = async (
     logger,
   );
 
-  return { logger, octokit };
+  return { logger, octokit, opts };
 };
 
 /**
@@ -52,6 +53,7 @@ export const init_octokit = async (
 ): Promise<{
   logger: Logger;
   octokit: Octokit;
+  opts: Arguments;
 }> => {
   const logger = await init_logger(opts.verbose, opts.orgName);
   const authConfig = createAuthConfig({ ...opts, logger });
@@ -63,5 +65,5 @@ export const init_octokit = async (
     logger,
   );
 
-  return { logger, octokit };
+  return { logger, octokit, opts };
 };

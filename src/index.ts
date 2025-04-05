@@ -12,3 +12,15 @@ export { withRetry, type RetryConfig, type RetryState } from './retry.js';
 
 // Configuration
 export { getOptsFromEnv } from './config.js';
+
+// CLI utilities
+export {
+  createBaseCommand,
+  createProgram,
+  type CommandOptionConfig,
+  type CommonOptionsConfig,
+} from './command.js';
+export { parseIntOption, parseFloatOption } from './utils.js';
+
+// Version
+export { default as VERSION } from './version.js';
