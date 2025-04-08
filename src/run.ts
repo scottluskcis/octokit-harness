@@ -23,6 +23,7 @@ export async function executeWithOctokit<T>(
     maxDelayMs: opts.retryMaxDelay || 30000,
     backoffFactor: opts.retryBackoffFactor || 2,
     successThreshold: opts.retrySuccessThreshold || 5,
+    retryDisabled: opts.retryDisabled || false,
   };
 
   let logger: Logger | undefined;
@@ -40,6 +41,11 @@ export async function executeWithOctokit<T>(
   // Define retry handler
   const onRetry = (state: RetryState) => {
     if (logger) {
+      const current = `retryCount: ${state.retryCount}, successCount: ${state.successCount}, attempt: ${state.attempt}`;
+      if (state.error) {
+        logger.error(`Error: ${state.error.message}, State - ${current}`);
+      }
+
       logger.warn(`Operation failed (attempt ${state.attempt}), retrying...`, {
         retryCount: state.retryCount,
         successCount: state.successCount,
@@ -49,5 +55,7 @@ export async function executeWithOctokit<T>(
   };
 
   // Execute the operation with retry
-  return await withRetry(operation, retryConfig, onRetry);
+  return retryConfig.retryDisabled
+    ? await operation()
+    : await withRetry(operation, retryConfig, onRetry);
 }
