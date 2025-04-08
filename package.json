@@ -1,6 +1,6 @@
 {
   "name": "@scottluskcis/octokit-harness",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A flexible wrapper for working with GitHub API using Octokit",
   "type": "module",
   "main": "dist/index.js",
@@ -74,6 +74,6 @@
     "rollup": "^4.35.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.3",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   }
 }

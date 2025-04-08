@@ -36,6 +36,7 @@ export interface Arguments {
   retryMaxDelay?: number;
   retryBackoffFactor?: number;
   retrySuccessThreshold?: number;
+  retryDisabled?: boolean;
 
   resumeFromLastSave?: boolean;
 
