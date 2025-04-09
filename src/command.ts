@@ -197,6 +197,13 @@ export function createBaseCommand({
         .argParser(parseIntOption),
       config: { defaultValue: '5', parser: parseIntOption },
     },
+    retryDisabled: {
+      option: new Option(
+        '--retry-disabled',
+        'Disable retry mechanism completely',
+      ).env('RETRY_DISABLED'),
+      config: {},
+    },
     resumeFromLastSave: {
       option: new Option(
         '--resume-from-last-save',
