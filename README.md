@@ -213,6 +213,7 @@ const result = await withRetry(
 | `retryMaxDelay`         | `RETRY_MAX_DELAY`         | Maximum retry delay in ms (default: 30000)                     |
 | `retryBackoffFactor`    | `RETRY_BACKOFF_FACTOR`    | Exponential backoff factor (default: 2)                        |
 | `retrySuccessThreshold` | `RETRY_SUCCESS_THRESHOLD` | Successful operations needed to reset retry count (default: 5) |
+| `retryDisabled`         | `RETRY_DISABLED`          | Disable retry mechanism completely (`true`/`false`)            |
 | `outputFile`            | `OUTPUT_FILE`             | Path to output file                                            |
 | `outputFileName`        | `OUTPUT_FILE_NAME`        | Name of the output file                                        |
 | `repoList`              | `REPO_LIST`               | Path to repository list file                                   |
