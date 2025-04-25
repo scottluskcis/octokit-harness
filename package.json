@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "@octokit/auth-app": "^7.2.1",
-    "@octokit/graphql": "^8.2.1",
+    "@octokit/graphql": "^8.2.2",
     "@octokit/plugin-paginate-graphql": "^5.2.4",
     "@octokit/plugin-throttling": "^9.4.0",
     "commander": "^13.1.0",
