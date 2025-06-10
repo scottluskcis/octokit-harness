@@ -71,7 +71,7 @@
     "@typescript-eslint/parser": "^6.19.0",
     "eslint-config-prettier": "^10.1.5",
     "prettier": "^3.5.3",
-    "rollup": "^4.40.2",
+    "rollup": "^4.42.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
