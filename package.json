@@ -57,7 +57,7 @@
     "commander": "^14.0.0",
     "dotenv": "^17.0.1",
     "octokit": "^5.0.3",
-    "undici": "^7.11.0",
+    "undici": "^7.24.0",
     "winston": "^3.17.0"
   },
   "devDependencies": {
@@ -71,7 +71,7 @@
     "@typescript-eslint/parser": "^6.19.0",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.6.2",
-    "rollup": "^4.52.3",
+    "rollup": "^4.60.4",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.3",
     "typescript": "^5.9.3"
