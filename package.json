@@ -67,14 +67,15 @@
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-typescript": "^12.3.0",
     "@types/node": "^24.12.4",
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^10.4.0",
     "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.6.0",
     "prettier": "^3.8.3",
     "rollup": "^4.60.4",
     "ts-node": "^10.9.2",
     "tslib": "^2.8.1",
     "tsx": "^4.22.3",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.60.0"
   }
 }
