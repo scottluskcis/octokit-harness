@@ -40,6 +40,7 @@
     },
     "./package.json": "./package.json"
   },
+  "packageManager": "pnpm@11.1.3",
   "author": "Scott Lusk",
   "license": "MIT",
   "bugs": {
