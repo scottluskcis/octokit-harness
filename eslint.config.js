@@ -1,14 +1,20 @@
 import eslint from '@eslint/js';
-import tseslint from '@typescript-eslint/eslint-plugin';
-import typescript from '@typescript-eslint/parser';
+import tseslint from 'typescript-eslint';
 import prettier from 'eslint-config-prettier';
+import globals from 'globals';
 
-export default [
+export default tseslint.config(
   eslint.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
+    files: ['**/*.js'],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
   {
     files: ['**/*.ts'],
     languageOptions: {
-      parser: typescript,
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
@@ -19,11 +25,7 @@ export default [
         setTimeout: 'readonly',
       },
     },
-    plugins: {
-      '@typescript-eslint': tseslint,
-    },
     rules: {
-      ...tseslint.configs.recommended.rules,
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-inferrable-types': 'warn',
       'no-useless-escape': 'off',
@@ -39,4 +41,4 @@ export default [
     ignores: ['dist/**', 'node_modules/**'],
   },
   prettier,
-];
+);
