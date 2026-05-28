@@ -39,8 +39,25 @@ export const createOctokit = (
     });
   };
 
+  const containsTagProtectionSunsetUrl = (message: string): boolean => {
+    const urlMatches = message.match(/https?:\/\/[^\s)]+/g) ?? [];
+
+    return urlMatches.some((value) => {
+      try {
+        const parsed = new URL(value);
+        return (
+          parsed.protocol === 'https:' &&
+          parsed.host === 'gh.io' &&
+          parsed.pathname === '/tag-protection-sunset'
+        );
+      } catch {
+        return false;
+      }
+    });
+  };
+
   const wrappedWarn: LoggerFn = (message: string, meta: unknown) => {
-    if (message.includes('https://gh.io/tag-protection-sunset')) return;
+    if (containsTagProtectionSunsetUrl(message)) return;
     logger.warn(message, meta);
   };
 
